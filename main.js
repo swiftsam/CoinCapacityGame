@@ -1,0 +1,672 @@
+// global object defintions (defined in classes.js)
+var GameConfig = new ConfigData();
+var CoinTots = new Coins();
+var CoinRound = new Coins();
+var CurrentBlock = new Block();
+
+
+//
+// PROJECT START - called on form load
+//
+$(document).ready(function()
+{
+	// slow client/server processing means forced sync processing on all ajax calls.
+	$.ajaxSetup({async: false});
+
+
+	// ensure all screens are hidden to begin with
+	HideScreens();
+
+
+	// button defintions
+	$("button").button();
+	$("#btn-login").click(function(){LoginEntry()});
+	$("#btn-begin").click(function(){GameStart()});
+	$("#btn-buy").click(function(){BuyCollector()});
+	$("#btn-next").click(function(){NextRound()});
+	$("#btn-pbs").click(function(){PBS()});
+	$("#btn-pgs").click(function(){PGS()});
+	$("#btn-bank").click(function(){BankCoins()});
+
+
+	// slider definitions
+	$("#slider-pbs1").slider({ min:0, max:9.0, step:0.1 });
+	$("#slider-pbs2").slider({ min:0, max:9.0, step:0.1 });
+	$("#slider-pgs1").slider({ min:0, max:100, step:1 });
+	$("#slider-pgs2").slider({ min:0, max:9.0, step:1 });
+
+	$(".slider").on("slidestart",  function(event,ui){$(ui.handle).show();});
+	$(".slider").on("slide", function(event,ui)
+		{
+			var Decs = 0;
+			if($(this).slider("option","step")<1)
+				Decs = 1;
+			$(ui.handle).html(ui.value.toFixed(Decs))
+		}
+	);
+
+
+	// user login details
+	UserLogin();
+
+
+	// grab the config data from the DB
+	$.getJSON("data.php", {source:"CONFIG",action:"GET"}, 
+	function(Data)
+	{
+		// load DB values into internal construct
+		CoinTots.Bank = Data.BankStart;
+		GameConfig.AdminUser = Data.AdminID;
+		GameConfig.Blocks = Data.Blocks;
+		GameConfig.Rounds = Data.Rounds;
+		GameConfig.Sizes = Data.Sizes.split(',');
+		GameConfig.Prices = Data.Prices.split(',');
+	});
+
+
+	// update screen intro info
+	$(".rounds").each(function() {$(this).html(GameConfig.Rounds);});
+	$(".total_rounds").each(function() {$(this).html(GameConfig.Blocks * GameConfig.Rounds);});
+
+
+	// special options for administrator
+	if(GameConfig.LoggedUser == GameConfig.AdminUser)
+		AdminMenu();
+
+
+	// navigate to relevant screen
+	var ScrArray = GameConfig.CurrentScreen.split(',');
+	switch(ScrArray[0])
+	{
+		case "INTRO":
+			$("#intro").show();
+			$.getJSON("data.php", {source:"USER",action:"SET",scr:"INTRO"});
+			break;
+		case "CD":
+			SetGameStats(ScrArray);
+			CollectorDecision();
+			break;
+		case "CA":
+			SetGameStats(ScrArray);
+			$("#coin_tots").show();
+			$(".this_round").each(function() {$(this).css("display","block")});
+			DispCoinStats();
+			$("#round_start").show();
+			$("#coin_drop").show();
+			CoinsAppear();
+			break;
+		case "PBS":
+			SetGameStats(ScrArray);
+			$("#header_text").html("Post-block survey");	
+			$("#survey1").show();
+			PBS();
+			break;
+		case "PGS":
+			SetGameStats(ScrArray);
+			$("#header_text").html("Post-game survey");	
+			$("#survey2").show();
+			PGS();
+			break;
+	}
+});
+
+
+//
+// User Login & initial screen decision
+//
+function UserLogin()
+{
+	GameConfig.CurrentScreen = "INTRO";
+	GameConfig.LoggedUser = '';
+
+	if($("#user").val().length > 0)
+		CheckUserID();
+
+	if(GameConfig.LoggedUser.length == 0)
+	{
+		$("#logged_no").show();
+	}
+	else
+	{
+		// time elapsed?
+		var d1 = new Date(GameConfig.LastActivity);
+		var d2 = new Date();
+		var mins = (d2-d1)/1000/60;
+		if(mins > 20 || GameConfig.CurrentScreen == "INTRO")
+		{
+			GameConfig.CurrentScreen = "INTRO";
+			$("#logged_yes").show();
+		}
+	}
+}
+
+
+//
+// Post Block Survey Results
+// fired by button click
+//
+function PBS()
+{
+	if($("#slider-pbs1").slider("value")==0 || $("#slider-pbs2").slider("value")==0)
+		alert("Positive values are required. Please ensure selected values on both sliders");
+	else
+	{
+		Log("PBS");
+
+		$(".slider").slider("value", 0.0);
+		$(".ui-slider .ui-slider-handle").css("display","none");
+
+		if(CoinTots.CurrentRound == GameConfig.Rounds*GameConfig.Blocks+1)
+		{
+			DumpActivity("PGS");
+			$("#survey1").hide();
+			$("#header_text").html("Post-game survey");	
+			$("#survey2").show();
+		}
+		else
+		{
+			$("#round_start").show();
+			CollectorDecision();
+		}
+	}
+}
+
+
+//
+// Post Game Survey Results
+// fired by button clicked
+//
+function PGS()
+{
+	if($("#slider-pgs1").slider("value")==0 || $("#slider-pgs2").slider("value")==0)
+		alert("Positive values are required. Please ensure selected values on both sliders");
+	else
+	{
+		Log("PGS");
+		$("#survey2").hide();
+		$("#header_text").html("THE END");
+		$("#credits").show();
+	}
+}
+
+
+//
+// display coin statisctics on screen
+//
+function DispCoinStats()
+{
+	$("#curr_round").html(CoinTots.CurrentRound);
+	$("#coins_poss_tot").html(CoinTots.Possible);
+	$("#coins_coll_tot").html(CoinTots.Collected);
+	$("#coins_lost_tot").html(CoinTots.Lost);
+	$("#coins_spent_tot").html(CoinTots.Spent);
+	$("#coins_bank_tot").html(CoinTots.Bank);
+
+	$("#coins_poss_this").html(CoinRound.Possible);
+	$("#coins_coll_this").html(CoinRound.Collected);
+	$("#coins_lost_this").html(CoinRound.Lost);
+}
+
+
+//
+// calculate the screen dimensions of a collector
+//
+function CollectorPixels(Size)
+{
+	// calculate the collector scale
+	//var Min = GameConfig.Sizes[0];
+	//var Max = GameConfig.Sizes[GameConfig.Sizes.length-1];
+	//var Scale = 375/(Max-Min);
+
+	//return (Size*Scale);
+	return(Size*40+10);
+}
+
+
+// 
+// populate table of collectors
+//
+function FillTable(TableName,HasButtons,Selected)
+{
+	// remove all current table rows
+	$("#"+TableName+" tr").remove();
+
+	// add in headings
+	var Heading = "<th align='right'></th><th>Size</th><th>Cost</th>";
+	if(HasButtons)
+		Heading += "<th>Buy</th>";
+	$("#"+TableName).append("<tr>"+Heading+"</tr>");
+
+	// add in values
+	for(var i=0; i<GameConfig.Sizes.length; i++)
+	{
+		var Size = GameConfig.Sizes[i];
+		var Price = GameConfig.Prices[i];
+		var Width = CollectorPixels(Size);
+
+		var c1 = "<td align='right'><img src='../images/slot.png' height='25' width='"+ Width +"'></td>";
+		var c2 = "<td class='tablecol' style='padding-right: 40px;'>"+Size+"</b></td>";
+		var c3 = "<td class='tablecol' style='padding-right: 20px;'>"+Price+" coins </td>";
+		var c4 = '';
+		if(HasButtons)
+			c4 = "<td class='tablecol'><input type='radio' name='radio_buy' value='"+i+"'></td>";
+		$('#'+TableName).append("<tr id='"+TableName+"_row"+i+"'>"+c1+c2+c3+c4+"</tr>");
+	}
+
+	// highligt selected row if required
+	if(Selected != null)
+	{
+		var RowDef = $("#"+TableName+"_row"+Selected);
+		RowDef.addClass("selected");
+	}
+}
+
+
+//
+// Game start following intro
+//
+function GameStart()
+{
+	// initial values
+	CoinTots.CurrentRound = 1;
+	CoinRound.CurrentRound = 1;
+	CurrentBlock.Num = 0;
+
+	// UI screen changes
+	$("#intro").hide();
+	$("#header_text").show();
+
+	CollectorDecision();
+}
+
+
+//
+// Collector Decision
+//
+function CollectorDecision()
+{
+	$(".this_round").each(function() {$(this).hide();});
+	$("#round_start").hide();
+	$("#survey1").hide();
+	$("#coin_tots").show();
+
+	DispCoinStats();
+
+	FillTable('buy_collectors', true, null);
+	
+	$("#header_text").html("Collector Decision");
+	$("#select_collect").show();
+
+	DumpActivity("CD");
+}
+
+
+//
+// buy button clicked
+//
+function BuyCollector()
+{
+	var CollectorSelected = $("input:checked").val();
+	if(CollectorSelected == undefined)
+		alert('A collector must be selected');
+	else
+	{
+		var Width = CollectorPixels(CollectorSelected);
+
+		// establish current block values then log on DB
+		CurrentBlock.Num++;
+		CurrentBlock.Cost = parseInt(GameConfig.Prices[CollectorSelected]);
+		CurrentBlock.Size = parseInt(GameConfig.Sizes[CollectorSelected]);
+		Log("BLOCK");
+
+		// screen flips
+		$("#select_collect").hide();
+		$("#header_text").html("Round Start");
+		$("#round_start").show();
+		$("#coin_drop").show();
+
+		// display selection
+		FillTable('bought_collectors', false, CollectorSelected);
+		$("#collector_slot").attr("width",Width.toString());
+		$(".this_round").each(function() {$(this).show();});
+
+		// calculate & display new screen totals
+		CoinTots.Spent += CurrentBlock.Cost;
+		CoinTots.Bank -= CurrentBlock.Cost;
+
+		CoinsAppear();
+	}
+}
+
+
+
+//
+// display coins
+//
+function CoinsAppear()
+{
+	var CoinDrops = new GetCoins();
+
+	// generate round data & log it
+	CoinDrops.SetPossible(CoinTots.CurrentRound);
+	CoinRound.Possible = CoinDrops.Possible;
+	CoinRound.Spent = CurrentBlock.Cost;
+	CoinRound.Collected = Math.min(CurrentBlock.Size, CoinDrops.Possible);
+	CoinRound.Lost = Math.max(0, CoinRound.Possible - CoinRound.Collected);
+	Log("ROUND");
+
+	// collected coins display
+	$("#header_text").html("Coins Appear");
+	$("#coin_drop").show();
+	$("#btn-bank").show();
+
+
+	// animate collector pull
+	//$("#coins_coll").css("width","0")
+	//$("#coins_coll").animate({width: "+="+CoinRound.Collected*40},300);
+
+
+	while(CoinDrops.Shown < CoinRound.Collected)
+		CoinDrops.ShowCoinCollected();
+
+	// pad out to full collector size with 'ghost' coins
+	while(CoinDrops.Shown < CurrentBlock.Size)
+		CoinDrops.GhostCoin();
+
+	// lost coins display
+	while(CoinDrops.Shown < CoinRound.Possible)
+		CoinDrops.ShowCoinLost();
+
+	DispCoinStats();
+
+	//DumpActivity("CA");
+}
+
+
+
+//
+// Bank Coins Button Press
+//
+function BankCoins()
+{
+	// fadeout the lost coins
+	for(var i=CoinRound.Collected; i<CoinRound.Possible; i++)
+		$("#coin"+i).delay(400).fadeOut();
+
+	// every second call coin movement
+	for(var i=0; i<CoinRound.Collected; i++)
+		setTimeout(CoinMove, i*1000, i);
+
+	// change screen attribs
+	$("#header_text").html("Coins Deposited");
+	$("#btn-bank").hide();
+
+	// update totals
+	CoinTots.Possible += CoinRound.Possible;
+	CoinTots.Collected += CoinRound.Collected;
+	CoinTots.Lost += CoinRound.Lost;
+	CoinTots.Bank += CoinRound.Collected;
+	DispCoinStats();
+
+	setTimeout(function(){ $("#btn-next").show(); }, CoinRound.Collected*1000);
+}
+
+
+function CoinMove(i)
+{
+	$("#coin"+i).css("visibility","hidden");
+	$('#coins_move').show();
+	$("#coins_move").animate({backgroundPositionX: "+=40"}, 600, function()
+		{
+			$('#coins_move').hide();
+			$("#coins_move").css("background-position", "0px 0px");
+		});
+}
+
+
+//
+// Next Round Button Press
+//
+function NextRound()
+{
+	$("#btn-next").hide();
+
+	CoinTots.CurrentRound ++;
+	DispCoinStats();
+
+	if(CoinTots.CurrentRound % GameConfig.Rounds == 1)
+	{
+		DumpActivity("PBS");
+		$("#round_start").hide();
+		$("#coin_tots").hide();
+		$("#header_text").html("Post-block survey");	
+		$("#survey1").show();
+	}
+	else
+	{
+		$("#coin_drop").show();
+		CoinsAppear();
+	}
+}
+
+
+
+//
+// user login dialog box
+//
+function LoginEntry()
+{
+	var $LoginWindow = jQuery('#get_login');
+	
+	$LoginWindow.dialog(
+	{
+		title:'Login',
+		height:200, width:300,
+		position:'center',
+		modal:true,
+		resizable:false,
+		autoOpen:false,
+		overlay: {opacity: 0.5, background: 'black'},
+		close: function(){location.replace("index.php?userID="+GameConfig.LoggedUser)},
+		buttons: 
+		[
+			{text:'submit',	click: function() 
+				{
+					CheckUserID();
+					if(GameConfig.LoggedUser.length == 0)
+						alert("USER ID NOT ON FILE");
+					else
+						$LoginWindow.dialog("close");
+				}
+			} ,
+			{text:'cancel',	click: function() { $(this).dialog("close"); }}
+		]
+	});
+	
+	$LoginWindow.dialog("open");
+}
+
+
+//
+// user validation
+//
+function CheckUserID()
+{
+	$.getJSON("data.php", {source:"USER",action:"GET",id:$("#user").val()}, 
+	function(Data)
+	{
+		if(Data.ID != undefined)
+		{
+			// set global object values
+			GameConfig.LoggedUser = Data.ID;
+			GameConfig.CurrentScreen = Data.LastScreen;
+			GameConfig.LastActivity = Data.LastActivity;
+
+			// hide screen display totals if required
+			if(Data.showTCP == false)
+				$("#tcp").hide();
+			if(Data.showTCC == false)
+				$("#tcc").hide();
+			if(Data.showTCL == false)
+				$("#tcl").hide();
+			if(Data.showCS == false)
+				$("#cs").hide();
+		}
+	});
+}
+
+
+//
+// Write Log files
+//
+function Log(Action)
+{
+	var p1,p2,p3,p4,p5;
+
+	switch(Action)
+	{
+		case "BLOCK":
+			p1 = CurrentBlock.Num;
+			p2 = CurrentBlock.Size;
+			p3 = -1;
+			p4 = -1;
+			p5 = -1;
+			break;
+		case "ROUND":
+			p1 = CurrentBlock.Num;
+			p2 = CoinTots.CurrentRound;
+			p3 = CoinRound.Possible;
+			p4 = CoinRound.Collected;
+			p5 = -1;
+			break;
+		case "PBS":
+			p1 = "slider-pbs1";
+			p2 = $("#slider-pbs1").slider("value");
+			p3 = "slider-pbs2";
+			p4 = $("#slider-pbs2").slider("value");
+			p5 = CurrentBlock.Num;
+			Action = "SURVEY";
+			break;
+		case "PGS":
+			p1 = "slider-pgs1";
+			p2 = $("#slider-pgs1").slider("value");
+			p3 = "slider-pgs2";
+			p4 = $("#slider-pgs2").slider("value");
+			p5 = CurrentBlock.Num;
+			Action = "SURVEY";
+			break;
+	}
+
+	$.getJSON("data.php", {source:"LOG", action:Action, p1:p1, p2:p2, p3:p3, p4:p4, p5:p5});
+}
+
+
+//
+// Record current screen status in case of refresh
+//
+function DumpActivity(Scr)
+{
+	var ScrData = Scr;
+	ScrData += ",bn:"+CurrentBlock.Num;
+	ScrData += ",cr:"+CoinTots.CurrentRound;
+	ScrData += ",tp:"+CoinTots.Possible;
+	ScrData += ",tc:"+CoinTots.Collected;
+	ScrData += ",tl:"+CoinTots.Lost;
+	ScrData += ",ts:"+CoinTots.Spent;
+	ScrData += ",tb:"+CoinTots.Bank;
+	ScrData += ",cs:"+$("input:checked").val();
+	$.getJSON("data.php", {source:"USER",action:"SET",scr:ScrData});
+}
+
+//
+// Read current screen status on refresh
+//
+function SetGameStats(Tots)
+{
+	for(var i=1; i<Tots.length; i++)
+	{
+		var split = Tots[i].split(':');
+		var num = parseInt(split[1]);
+		switch(split[0])
+		{
+			case "bn": CurrentBlock.Num = num; break;
+			case "cr": CoinTots.CurrentRound = num; break;
+			case "tp": CoinTots.Possible = num; break;
+			case "tc": CoinTots.Collected = num; break;
+			case "tl": CoinTots.Lost = num; break;
+			case "ts": CoinTots.Spent = num; break;
+			case "tb": CoinTots.Bank = num; break;
+			//case "cs": FillTable('bought_collectors', false, num); break;
+							//$("input").val(num) ; break; 
+		}					
+	}
+	$("#header_text").show();
+}
+
+
+//
+// Hide all HTML screens scections
+//
+function HideScreens()
+{
+	$("#intro").hide();
+	$("#coin_tots").hide();
+	$("#round_start").hide();
+	$("#select_collect").hide();
+	$("#logged_no").hide();
+	$("#logged_yes").hide();
+	$("#survey1").hide();
+	$("#survey2").hide();
+	$("#admin").hide();
+	$("#credits").hide();
+}
+
+
+//
+// Admin menu
+//
+function AdminMenu()
+{
+	var $AdminWindow = jQuery('#admin');	
+	$AdminWindow.dialog(
+	{
+		title:'Administrator',
+		height:200, width:530,
+		position:'center',
+		modal:true,
+		resizable:false,
+		autoOpen:false,
+		overlay: {opacity: 0.5, background: 'black'},
+		close: function()
+			{
+				HideScreens();
+				GameConfig.CurrentScreen = "INTRO";
+				$("#intro").show();
+				$("#logged_yes").show();
+			},
+	
+		buttons: 
+		[
+			{text:'Clear Logs',	click: function() 
+				{
+					$.getJSON("data.php", {source:"ADMIN", action:"LOGS"});
+					alert("Logs Cleared");
+				}
+			},
+			{text:'Reset Screens',	click: function() 
+				{
+					$.getJSON("data.php", {source:"ADMIN", action:"SCR"});
+					alert("Screens Reset");
+				}
+			},
+			{text:'Stats',	click: function() {alert('this feature not currently available')}},
+			{text:'Exit',	click: function() { $(this).dialog("close"); }}
+		]
+		
+	});
+	
+	HideScreens();
+
+	$AdminWindow.dialog("open");
+}
+

@@ -1,0 +1,153 @@
+body
+{
+	border:3px solid yellow;
+	width:600px;
+	margin-left:auto;
+	margin-right:auto;
+	background-color:gainsboro;
+}
+
+h1
+{
+	color:navy;
+	font-family: arial,helvetica,sans-serif;
+	font-size:180%;
+	padding-top:10px;
+	padding-bottom:10px;
+	text-align:center;
+}
+
+h2
+{
+	color:black;
+	font-size:115%;
+	margin-left:55px;
+	margin-right:55px;
+	padding-top:2px;
+	text-align:justified;
+}
+
+h3
+{
+	color:green;
+	font-size:120%;
+	margin-right:10px;
+}
+
+th
+{
+	color:navy;
+	font-family: arial,helvetica,sans-serif;
+	font-size:120%;
+	text-align:center;
+}
+
+tr.selected td
+{
+	background-color:goldenrod;
+}
+
+.dialog
+{
+	display:none; 
+	text-align:center; 
+	font-size:10pt;
+}
+
+.tablecol
+{
+	text-align: center;
+}
+
+.this_round
+{
+	width:130px;
+	display:none;
+	text-align:right;
+}
+
+.collectors
+{
+	border-width:5px;	
+	border-style:solid;
+	background-color: palegoldenrod;
+	border-collapse:collapse;
+}
+
+
+#btn-buy
+{
+	width:160px;
+}
+#btn-next
+{
+	width:160px;
+	display:none; 	
+}
+#btn-pbs
+{
+	width:140px;
+}
+
+
+
+#header_text
+{
+	text-align:center;
+	text-decoration:underline;
+	color:navy;
+}
+
+#coins_coll
+{
+	padding-left:12px;
+	background-image:url('../images/slot.png');
+	background-size:96% 38px;
+	background-repeat:no-repeat;
+	background-position:left bottom;
+}
+
+#piggy
+{
+	margin-top:0px;
+	margin-bottom:0px;
+	height:98px;
+	width:120px;
+	background-image: url('../images/piggy.png');
+	background-size:cover;
+	background-repeat:no-repeat;
+}
+
+#coin_drop
+{
+	margin-top:24px;
+	margin-bottom:24px;
+	margin-right:42px;
+}
+
+#coins_move
+{
+	padding-left:22px;
+	height:40px;
+	width:100px;
+	background-image:url('../images/coin.png');
+	background-size: 40px 40px;
+	background-repeat:no-repeat;
+	position:fixed;
+	display:none;
+	border-collapse:collapse;
+}
+
+
+
+.ui-slider .ui-slider-handle
+{
+    top: -8px;
+    width:30px; 
+    height:35px; 
+    position:absolute;
+    border-style:none; 
+    border:none;
+    display:none;
+    text-align: center;
+}
