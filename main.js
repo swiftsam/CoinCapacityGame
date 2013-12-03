@@ -61,6 +61,9 @@ $(document).ready(function()
 		GameConfig.Rounds = Data.Rounds;
 		GameConfig.Sizes = Data.Sizes.split(',');
 		GameConfig.Prices = Data.Prices.split(',');
+		GameConfig.AnimateCoinInterval = Data.AnimateCoinInterval;
+		GameConfig.AnimateCoinSpeed = Data.AnimateCoinSpeed;
+		GameConfig.AnimateCoinFade = Data.AnimateCoinFade;
 	});
 
 
@@ -361,11 +364,6 @@ function CoinsAppear()
 	$("#btn-bank").show();
 
 
-	// animate collector pull
-	//$("#coins_coll").css("width","0")
-	//$("#coins_coll").animate({width: "+="+CoinRound.Collected*40},300);
-
-
 	while(CoinDrops.Shown < CoinRound.Collected)
 		CoinDrops.ShowCoinCollected();
 
@@ -389,17 +387,24 @@ function CoinsAppear()
 //
 function BankCoins()
 {
-	// fadeout the lost coins
-	for(var i=CoinRound.Collected; i<CoinRound.Possible; i++)
-		$("#coin"+i).delay(400).fadeOut();
+	var Interval, CoinNum;
+
 
 	// every second call coin movement
-	for(var i=0; i<CoinRound.Collected; i++)
-		setTimeout(CoinMove, i*1000, i);
+	Interval = GameConfig.AnimateCoinInterval * 1000;
+	for(CoinNum=0; CoinNum<CoinRound.Collected; CoinNum++)
+		setTimeout(CoinMove, CoinNum*Interval, CoinNum);
+
+
+	// fadeout the lost coins
+	for(CoinNum=CoinRound.Collected; CoinNum<CoinRound.Possible; CoinNum++)
+		setTimeout(CoinFade, CoinNum*Interval, CoinNum);
+
 
 	// change screen attribs
 	$("#header_text").html("Coins Deposited");
 	$("#btn-bank").hide();
+
 
 	// update totals
 	CoinTots.Possible += CoinRound.Possible;
@@ -408,15 +413,32 @@ function BankCoins()
 	CoinTots.Bank += CoinRound.Collected;
 	DispCoinStats();
 
-	setTimeout(function(){ $("#btn-next").show(); }, CoinRound.Collected*1000);
+
+	// button display
+	setTimeout(function(){ $("#btn-next").show(); }, CoinRound.Possible*Interval+200);
 }
 
 
+//
+// Coin Fade
+// called on a timer interrupt
+//
+function CoinFade(i)
+{
+	$("#coin"+i).fadeOut(GameConfig.AnimateCoinFade*1000);
+}
+
+
+
+//
+// Coin Animation
+// called on a timer interrupt
+//
 function CoinMove(i)
 {
 	$("#coin"+i).css("visibility","hidden");
 	$('#coins_move').show();
-	$("#coins_move").animate({backgroundPositionX: "+=40"}, 600, function()
+	$("#coins_move").animate({backgroundPositionX: "+=40"}, GameConfig.AnimateCoinSpeed*1000, function()
 		{
 			$('#coins_move').hide();
 			$("#coins_move").css("background-position", "0px 0px");

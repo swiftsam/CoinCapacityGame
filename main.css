@@ -82,7 +82,8 @@ tr.selected td
 #btn-next
 {
 	width:160px;
-	display:none; 	
+	display:none; 
+	position:absolute;
 }
 #btn-pbs
 {

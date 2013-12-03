@@ -11,6 +11,9 @@ function ConfigData()
 	this.Rounds;
 	this.Sizes;
 	this.Prices;
+	this.AnimateCoinInterval;
+	this.AnimateCoinSpeed;
+	this.AnimateCoinFade;
 }
 
 

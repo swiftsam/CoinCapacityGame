@@ -121,35 +121,30 @@
 	</div>
 
 
+	<!-- next round -->
+	<div align="center"><button id='btn-next'>Continue to next round</button></div>
+
+
 	<!-- round start / coins appear -->
 	<div id="round_start">
-			<table align='right' id="coin_drop" border=0> 
-				<tr>
-					<td id="coins_lost"></td>
-					<td id="coins_coll"></td>
-					<td id="coins_move"></td>
-				</tr>
-				<tr>
-					<td></td>
-					<td></td>
-					<td id='piggy'></td>
-				</tr>
-				<tr>
-					<td></td>
-					<td></td>
-					<td align="center" ><button id='btn-bank'>Bank</button></td>
-				</tr>
-			</table>
-			<br><br>		
-		
+		<table align='right' id="coin_drop"> 
+			<tr>
+				<td id="coins_lost"></td>
+				<td id="coins_coll"></td>
+				<td id="coins_move"></td>
+			</tr>
+			<tr>
+				<td></td><td></td><td id='piggy'></td>
+			</tr>
+			<tr>
+				<td></td><td></td><td align="center" ><button id='btn-bank'>Bank</button></td>
+			</tr>
+		</table>
+		<br><br>
 		
 		<table class="collectors" id="bought_collectors" align="center"> <!-- contents dynamic & populated via javascript -->
 		</table>
 	</div>
-
-
-	<!-- next round -->
-	<p align="center"><button id='btn-next'>Continue to next round</button></p>
 
 
 	<!-- post block survey -->
