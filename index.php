@@ -12,7 +12,6 @@
 <head>
 	<meta charset="UTF-8">
 	<meta name="description" content="Coin Collection Game">
-	<meta name="author" content="Sam Swift" >
 	<title>Coin Collector Game</title>
 		
 	<script type="text/javascript" src="../jQuery/js/main.js"></script>
@@ -20,7 +19,7 @@
 	<script type="text/javascript" src="classes.js"></script>
 	<script type="text/javascript" src="main.js"></script>
 
-	<link type="text/css" href="../jQuery/css/start/min.css" rel="stylesheet" />
+	<link type="text/css" href="../jQuery/css/ui-lightness/min.css" rel="stylesheet" />
 	<link type="text/css" href="bootstrap.min.css" rel="stylesheet"/>
 	<link type="text/css" href="main.css" rel="stylesheet"/>
 
@@ -51,19 +50,20 @@
 
 	<!-- game intro page -->
 	<div id="intro">
-		<h1>Welcome to the Coin Collecting Game</h1>
-		<h2>In this game, your goal is to finish the game with as many coins as you can.</h2>
-		<h2>The number of coins you can collect is determined by the size of the collector you have.</h2>
-		<h2>
+		<h2>Welcome to</h2>
+		<h1> The Coin Collecting Game</h1>
+		<p>In this game, your goal is to finish the game with as many coins as you can.</p>
+		<p>The number of coins you can collect is determined by the size of the collector you have.</p>
+		<p>
 			This game will last <span class="total_rounds"></span> rounds.
 			After every <span class='rounds'></span> rounds you will decide how large of a collector you want to buy for the following rounds.
-		</h2>
+		</p>
 		<br>
 		<div id="logged_no" align="center">
 			<h2>You are required to login with a valid user id to play</h2>
 			<button id='btn-login'>Login</button>
 		</div>
-		<div id="logged_yes" align="center">
+		<div id="logged_yes">
 			<h2>Are you ready to begin?</h2>
 			<button id='btn-begin'>Begin</button>
 		</div>
@@ -87,6 +87,12 @@
 		   <div id="cs"  ><span class="stat" id='coins_spent_tot'></span>coins spent</div>
 		   <div id="bank"><span class="stat" id='coins_bank_tot'></span>coins in bank</div>
 	   </div>
+		<div id="buttons">
+			<button id='btn-buy'>Buy collector</button><br />			
+			<button id='btn-bank'>Deposit Coins</button><br />	
+			<button id='btn-next'>Next Round</button><br />
+		</div>	   
+	   
 	   <div class="clearfix"></div>
 	</div>
 
@@ -98,18 +104,11 @@
 		The collector you choose now will last only <span class='rounds'></span> rounds after which you will have to choose again. 
 		<table class="collectors" id="buy_collectors" align="center"> <!-- contents dynamic & populated via javascript -->
 		</table>
-
-		<br>
-
-		<div align="center">
-			<button id='btn-buy'>Buy collector and start</button>
-		</div>
-		<br>
 	</div>
 
 
 	<!-- next round -->
-	<div align="center"><button id='btn-next'>Continue to next round</button></div>
+	<div align="center"></div>
 
 
 	<!-- round start / coins appear -->
@@ -124,7 +123,7 @@
 				<td></td><td></td><td id='piggy'></td>
 			</tr>
 			<tr>
-				<td></td><td></td><td align="center" ><button id='btn-bank'>Bank</button></td>
+				<td></td><td></td><td align="center" ></td>
 			</tr>
 		</table>
 		<br><br>

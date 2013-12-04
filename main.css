@@ -19,19 +19,19 @@ h1
 
 h2
 {
-	color:black;
-	font-size:115%;
-	margin-left:55px;
-	margin-right:55px;
-	padding-top:2px;
-	text-align:justified;
+	//color:black;
+	//font-size:115%;
+	//margin-left:55px;
+	//margin-right:55px;
+	//padding-top:2px;
+	//text-align:justified;
 }
 
 h3
 {
-	color:green;
-	font-size:120%;
-	margin-right:10px;
+	//color:green;
+	//font-size:120%;
+	//margin-right:10px;
 }
 
 th
@@ -85,22 +85,31 @@ tr.selected td
 
 .collectors
 {
-	//border-width:2px;	
-	//border-style:solid;
-	//background-color: palegoldenrod;
 	border-collapse:collapse;
 }
 
+#buttons
+{
+	width: 160px;
+	margin-left: auto;
+	margin-right: auto;
+	text-align: center;
+}
 
+#buttons button
+{
+	width: 130px;
+	margin: 5px 0px;	
+}
 #btn-buy
 {
-	width:160px;
+	//width:160px;
 }
 #btn-next
 {
-	width:160px;
-	display:none; 
-	position:absolute;
+	//width:160px;
+	//display:none; 
+	//position:absolute;
 }
 #btn-pbs
 {

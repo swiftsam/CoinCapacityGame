@@ -92,7 +92,7 @@ $(document).ready(function()
 		case "CA":
 			SetGameStats(ScrArray);
 			$("#coin_tots").show();
-			$(".this_round").each(function() {$(this).css("display","block")});
+			$("#this_round").show();
 			DispCoinStats();
 			$("#round_start").show();
 			$("#coin_drop").show();
@@ -288,10 +288,13 @@ function GameStart()
 //
 function CollectorDecision()
 {
-	$(".this_round").each(function() {$(this).hide();});
+	$("#this_round").hide();
 	$("#round_start").hide();
 	$("#survey1").hide();
 	$("#coin_tots").show();
+   $("#btn-buy").prop("disabled",false);
+	$("#btn-bank").prop("disabled",true);
+	$("#btn-next").prop("disabled",true);
 
 	DispCoinStats();
 
@@ -331,7 +334,9 @@ function BuyCollector()
 		// display selection
 		FillTable('bought_collectors', false, CollectorSelected);
 		$("#collector_slot").attr("width",Width.toString());
-		$(".this_round").each(function() {$(this).show();});
+		$("#this_round").show();
+		$("#btn-buy").prop("disabled",true);
+		$("#btn-next").prop("disabled",true);
 
 		// calculate & display new screen totals
 		CoinTots.Spent += CurrentBlock.Cost;
@@ -361,7 +366,8 @@ function CoinsAppear()
 	// collected coins display
 	$("#header_text").html("Coins Appear");
 	$("#coin_drop").show();
-	$("#btn-bank").show();
+	$("#btn-bank").html("Deposit "+CoinRound.Collected+" Coins");	
+	$("#btn-bank").prop("disabled",false);
 
 
 	while(CoinDrops.Shown < CoinRound.Collected)
@@ -403,7 +409,8 @@ function BankCoins()
 
 	// change screen attribs
 	$("#header_text").html("Coins Deposited");
-	$("#btn-bank").hide();
+	$("#btn-bank").html("Deposit Coins");	
+	$("#btn-bank").prop("disabled",true);
 
 
 	// update totals
@@ -415,7 +422,7 @@ function BankCoins()
 
 
 	// button display
-	setTimeout(function(){ $("#btn-next").show(); }, CoinRound.Possible*Interval+200);
+	setTimeout(function(){ $("#btn-next").prop("disabled",false); }, CoinRound.Possible*Interval+200);
 }
 
 
@@ -451,7 +458,8 @@ function CoinMove(i)
 //
 function NextRound()
 {
-	$("#btn-next").hide();
+	//$("#btn-next").hide();
+	$("#btn-next").prop("disabled",true);
 
 	CoinTots.CurrentRound ++;
 	DispCoinStats();
