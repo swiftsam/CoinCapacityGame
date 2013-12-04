@@ -314,7 +314,7 @@ function BuyCollector()
 {
 	var CollectorSelected = $("input:checked").val();
 	if(CollectorSelected == undefined)
-		alert('A collector must be selected');
+		alert('Please select which collector you would like to buy');
 	else
 	{
 		var Width = CollectorPixels(CollectorSelected);
@@ -504,7 +504,7 @@ function LoginEntry()
 				{
 					CheckUserID();
 					if(GameConfig.LoggedUser.length == 0)
-						alert("USER ID NOT ON FILE");
+						alert("Not a valid participant ID\nIf you think this is an error,\nplease email samswift@berkeley.edu");
 					else
 						$LoginWindow.dialog("close");
 				}

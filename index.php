@@ -19,14 +19,14 @@
 	<script type="text/javascript" src="classes.js"></script>
 	<script type="text/javascript" src="main.js"></script>
 
-	<link type="text/css" href="../jQuery/css/ui-lightness/min.css" rel="stylesheet" />
+	<!--<link type="text/css" href="../jQuery/css/smoothness/jquery.ui.theme.css" rel="stylesheet" />-->
+	<!--<link type="text/css" href="../jQuery/css/smoothness/jquery-ui.min.css" rel="stylesheet" />-->
 	<link type="text/css" href="bootstrap.min.css" rel="stylesheet"/>
 	<link type="text/css" href="main.css" rel="stylesheet"/>
 
 	<link rel="shortcut icon" href="../images/favicon.ico" type="image/x-icon">
 	<link rel="icon" href="../images/favicon.ico" type="image/x-icon">
 </head>
-
 
 
 <!-- ******* -->
@@ -51,7 +51,7 @@
 	<!-- game intro page -->
 	<div id="intro">
 		<h2>Welcome to</h2>
-		<h1> The Coin Collecting Game</h1>
+		<h1>The Coin Collecting Game</h1>
 		<p>In this game, your goal is to finish the game with as many coins as you can.</p>
 		<p>The number of coins you can collect is determined by the size of the collector you have.</p>
 		<p>
@@ -59,7 +59,7 @@
 			After every <span class='rounds'></span> rounds you will decide how large of a collector you want to buy for the following rounds.
 		</p>
 		<br>
-		<div id="logged_no" align="center">
+		<div id="logged_no">
 			<h2>You are required to login with a valid user id to play</h2>
 			<button id='btn-login'>Login</button>
 		</div>
@@ -102,7 +102,7 @@
 		Please choose a coin collector from the choices below. 
 		Larger collectors cost more and can collect more coins per round.
 		The collector you choose now will last only <span class='rounds'></span> rounds after which you will have to choose again. 
-		<table class="collectors" id="buy_collectors" align="center"> <!-- contents dynamic & populated via javascript -->
+		<table class="collectors" id="buy_collectors"> <!-- contents dynamic & populated via javascript -->
 		</table>
 	</div>
 
@@ -123,12 +123,12 @@
 				<td></td><td></td><td id='piggy'></td>
 			</tr>
 			<tr>
-				<td></td><td></td><td align="center" ></td>
+				<td></td><td></td><td></td>
 			</tr>
 		</table>
 		<br><br>
 		
-		<table class="collectors" id="bought_collectors" align="center"> <!-- contents dynamic & populated via javascript -->
+		<table class="collectors" id="bought_collectors"> <!-- contents dynamic & populated via javascript -->
 		</table>
 	</div>
 
@@ -136,19 +136,19 @@
 	<!-- post block survey -->
 	<div id="survey1">
 		<br><br>
-		<table width="95%" align="center">
-			<tr><td colspan='3'><h2>What was the average number of coins possible per round over the last <span class='rounds'></span> rounds?</h2></td></tr>
+		<table width="95%">
+			<tr><td colspan='3'>What was the average number of coins possible per round over the last <span class='rounds'></span> rounds?</td></tr>
 			<tr><td width="5px">0</td><td class="slider" id="slider-pbs1"></td><td width="5px">9</td></tr>
 		</table>
 		
 		<br><br>
-		<table width="95%" align="center">
-			<tr><td colspan="3"><h2>What was the average number of coins possible per round since the beginning of the game?</h2></td></tr>
+		<table width="95%">
+			<tr><td colspan="3">What was the average number of coins possible per round since the beginning of the game?</td></tr>
 			<tr><td width="5px">0</td><td class="slider" id="slider-pbs2"></td><td width="5px">9</td></tr>
 		</table>
 		
 		<br><br><br>
-		<div align='center'>
+		<div>
 			<button id='btn-pbs'>Save & Continue</button>
 		</div>
 		<br>
@@ -156,16 +156,16 @@
 
 
 	<!-- post game survey -->
-	<div id="survey2" align="center">
+	<div id="survey2">
 		<br><br>
-		<table width="90%" align="center" >
-			<tr><td colspan='3'><h2>How many times was your collector too small for the coins that appeared</h2></td></tr>
+		<table width="90%">
+			<tr><td colspan='3'>How many times was your collector too small for the coins that appeared</td></tr>
 			<tr><td width="5px">0</td><td class="slider" id="slider-pgs1"></td><td width="5px">100</td></tr>
 		</table>
 		
 		<br><br>
 		<table width="90%" align="center" >
-			<tr><td colspan='3'><h2>If you had to play again now and pick one collector for all rounds, what size would you pick?</h2> </td></tr>
+			<tr><td colspan='3'>If you had to play again now and pick one collector for all rounds, what size would you pick?</td></tr>
 			<tr><td width="5px">0</td><td class="slider" id="slider-pgs2"></td><td width="5px">9</td></tr>
 		</table>
 		
@@ -178,13 +178,13 @@
 
 
 	<!-- admin options -->
-	<div id="admin" align="center">
+	<div id="admin">
 		Optional administrator functions
 	</div>
 
 
 	<!-- credits -->
-	<div id="credits" align="center">
+	<div id="credits">
 		<br><br><b>Concept & Design</b>
 		<br>Dr Sam Swift
 		<br>Dr Adrian Camilleri

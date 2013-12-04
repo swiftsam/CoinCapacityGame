@@ -36,10 +36,10 @@ h3
 
 th
 {
-	color:navy;
-	font-family: arial,helvetica,sans-serif;
-	font-size:120%;
-	text-align:center;
+	//color:navy;
+	//font-family: arial,helvetica,sans-serif;
+	//font-size:120%;
+	//text-align:center;
 }
 
 tr.selected td
@@ -72,7 +72,7 @@ tr.selected td
 
 .stat
 {
-	font-size: 1.1em;
+	font-size: 1.3em;
 	font-weight: bold;
 	margin-right: 5px;
 }
