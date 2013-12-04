@@ -1,20 +1,20 @@
 body
 {
-	border:3px solid yellow;
+	//border:3px solid yellow;
 	width:600px;
 	margin-left:auto;
 	margin-right:auto;
-	background-color:gainsboro;
+	//background-color:gainsboro;
 }
 
 h1
 {
-	color:navy;
-	font-family: arial,helvetica,sans-serif;
-	font-size:180%;
-	padding-top:10px;
-	padding-bottom:10px;
-	text-align:center;
+	//color:navy;
+	//font-family: arial,helvetica,sans-serif;
+	//font-size:180%;
+	//padding-top:10px;
+	//padding-bottom:10px;
+	//text-align:center;
 }
 
 h2
@@ -59,18 +59,35 @@ tr.selected td
 	text-align: center;
 }
 
-.this_round
+.clearfix
 {
-	width:130px;
-	display:none;
-	text-align:right;
+	clear: both;
+}
+
+#this_round
+{
+	float: left;
+	clear: left;
+}
+
+.stat
+{
+	font-size: 1.1em;
+	font-weight: bold;
+	margin-right: 5px;
+}
+
+#all_rounds
+{
+	float: right;
+	clear: right;	
 }
 
 .collectors
 {
-	border-width:5px;	
-	border-style:solid;
-	background-color: palegoldenrod;
+	//border-width:2px;	
+	//border-style:solid;
+	//background-color: palegoldenrod;
 	border-collapse:collapse;
 }
 
@@ -90,13 +107,16 @@ tr.selected td
 	width:140px;
 }
 
-
-
 #header_text
 {
 	text-align:center;
 	text-decoration:underline;
 	color:navy;
+}
+
+#select_collect
+{
+	clear:both;	
 }
 
 #coins_coll

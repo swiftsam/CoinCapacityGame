@@ -12,15 +12,16 @@
 <head>
 	<meta charset="UTF-8">
 	<meta name="description" content="Coin Collection Game">
-	<meta name="author" content="Martin J Gibbs">
+	<meta name="author" content="Sam Swift" >
 	<title>Coin Collector Game</title>
 		
 	<script type="text/javascript" src="../jQuery/js/main.js"></script>
 	<script type="text/javascript" src="../jQuery/js/ui.js"></script>
-	<link type="text/css" href="../jQuery/css/start/min.css" rel="stylesheet" />
-		
 	<script type="text/javascript" src="classes.js"></script>
 	<script type="text/javascript" src="main.js"></script>
+
+	<link type="text/css" href="../jQuery/css/start/min.css" rel="stylesheet" />
+	<link type="text/css" href="bootstrap.min.css" rel="stylesheet"/>
 	<link type="text/css" href="main.css" rel="stylesheet"/>
 
 	<link rel="shortcut icon" href="../images/favicon.ico" type="image/x-icon">
@@ -72,43 +73,29 @@
 
 	<!-- coin totals -->
 	<div id="coin_tots">
-		<table width="98%" align="center">
-			<tr>
-				<td><div class="this_round"><b>This Round:</b></div></td>
-				<td align="right"><b>Round <span id="curr_round"></span> of <span class="total_rounds"></span></b></td>
-			</tr>
-			<tr>
-				<td><div class="this_round">Coins possible = <span id='coins_poss_this'></div></td>
-				<td id="tcp" align="right">Total coins possible = <span id='coins_poss_tot'></span></td>
-			</tr>
-			<tr>
-				<td><div class="this_round">Coins collected = <span id='coins_coll_this'></span></div></td>
-				<td id="tcc" align="right">Total coins collected = <span id='coins_coll_tot'></span></td>
-			</tr>
-			<tr>
-				<td><div class="this_round">Coins lost = <span id='coins_lost_this'></span></div></td>
-				<td id="tcl" align="right">Total coins lost = <span id='coins_lost_tot'></span></td>
-			</tr>
-			<tr>
-				<td></td>
-				<td id="cs" align="right">Coins spent = <span id='coins_spent_tot'></span></td>
-			</tr>
-			<tr>
-				<td></td>
-				<td align="right">Coins in bank = <span id='coins_bank_tot'></span></td>
-			</tr>
-		</table>
+		<div id="this_round">
+			<b>Round <span id="curr_round"></span> of <span class="total_rounds"></span></b>
+			<div><span class="stat" id='coins_poss_this'></span>coins possible</div>
+			<div><span class="stat" id='coins_coll_this'></span>coins collected</div>
+			<div><span class="stat" id='coins_lost_this'></span>coins not collected</div>			
+		</div>
+		<div id="all_rounds">
+			<b>Overall</b>
+		  	<div id="tcp" ><span class="stat" id='coins_poss_tot'></span>total coins possible</div>
+			<div id="tcc" ><span class="stat" id='coins_coll_tot'></span>total coins collected</div>
+		   <div id="tcl" ><span class="stat" id='coins_lost_tot'></span>total coins lost</div>
+		   <div id="cs"  ><span class="stat" id='coins_spent_tot'></span>coins spent</div>
+		   <div id="bank"><span class="stat" id='coins_bank_tot'></span>coins in bank</div>
+	   </div>
+	   <div class="clearfix"></div>
 	</div>
 
 
 	<!-- collector size select -->
 	<div id="select_collect">
-		<h2>
-			Please choose a coin collector from the choices below. 
-			Larger collectors cost more and can collect more coins per round.
-			The collector you choose now will last only <span class='rounds'></span> rounds after which you will have to choose again. 
-		</h2>
-
+		Please choose a coin collector from the choices below. 
+		Larger collectors cost more and can collect more coins per round.
+		The collector you choose now will last only <span class='rounds'></span> rounds after which you will have to choose again. 
 		<table class="collectors" id="buy_collectors" align="center"> <!-- contents dynamic & populated via javascript -->
 		</table>
 
