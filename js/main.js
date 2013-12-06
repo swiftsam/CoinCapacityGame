@@ -95,7 +95,6 @@ $(document).ready(function()
 			SetGameStats(ScrArray);
 			$("#coin_tots").show();
 			$("#this_round").show();
-			DispCoinStats();
 			$("#round_start").show();
 			$("#coin_drop").show();
 			CoinsAppear();
@@ -190,12 +189,14 @@ function PGS()
 //
 function DispCoinStats()
 {
+	$("#this_round .stat").css('opacity',0);
 	$("#curr_round").html(CoinTots.CurrentRound);
 	$("#coins_poss_tot").html(CoinTots.Possible);
 	$("#coins_coll_tot").html(CoinTots.Collected);
 	$("#coins_lost_tot").html(CoinTots.Lost);
 	$("#coins_spent_tot").html(CoinTots.Spent);
 	$("#coins_bank_tot").html(CoinTots.Bank);
+	$("#this_round .stat").animate({opacity:1});
 
 	$("#coins_poss_this").html(CoinRound.Possible);
 	$("#coins_coll_this").html(CoinRound.Collected);
@@ -416,7 +417,6 @@ function BankCoins()
 	CoinTots.Collected += CoinRound.Collected;
 	CoinTots.Lost += CoinRound.Lost;
 	CoinTots.Bank += CoinRound.Collected;
-	DispCoinStats();
 
 
 	// button display
@@ -460,7 +460,6 @@ function NextRound()
 	$("#btn-next").prop("disabled",true);
 
 	CoinTots.CurrentRound ++;
-	DispCoinStats();
 
 	if(CoinTots.CurrentRound % GameConfig.Rounds == 1)
 	{
