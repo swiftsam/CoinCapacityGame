@@ -4,8 +4,6 @@
 	session_start();
 ?>
 
-
-
 <!-- ****** -->
 <!-- HEADER -->
 <!-- ****** -->
@@ -19,8 +17,8 @@
 	<script type="text/javascript" src="classes.js"></script>
 	<script type="text/javascript" src="main.js"></script>
 
-	<!--<link type="text/css" href="../jQuery/css/smoothness/jquery.ui.theme.css" rel="stylesheet" />-->
-	<!--<link type="text/css" href="../jQuery/css/smoothness/jquery-ui.min.css" rel="stylesheet" />-->
+	<link type="text/css" href="../jQuery/css/smoothness/jquery.ui.theme.css" rel="stylesheet" />
+	<link type="text/css" href="../jQuery/css/smoothness/jquery-ui.min.css" rel="stylesheet" />
 	<link type="text/css" href="bootstrap.min.css" rel="stylesheet"/>
 	<link type="text/css" href="main.css" rel="stylesheet"/>
 
@@ -28,46 +26,41 @@
 	<link rel="icon" href="../images/favicon.ico" type="image/x-icon">
 </head>
 
-
-<!-- ******* -->
-<!-- USER ID -->
-<!-- ******* -->
-<?php
-	echo '<div class="dialog" id="get_login">';
-	echo '<p align="center">User ID <input type="text" id="user" class="user" size="10"';
-	if(isset($_GET['userID']))
-		echo ' value="'.$_GET['userID'].'"';
-	echo '/></p></div>';
-?>
-
-
 <!-- **** -->
 <!-- BODY -->
 <!-- **** -->
 <body>
 	<p id="header_text"></p>
 
+	<!-- landing / login page -->
+	<div id="landing">
+		<h2>Welcome to</h2>
+		<h1>The Coin Collecting Game</h1>
+		<p>To play the coin collecting game, you'll need a participation code.  You should have received a link which included the code which would have looked like this:</p>
+		<p>http://ccg.samswift.org/?userID=glIqFtKsIN</p>
+		<p>If you have a participation code, you can enter it here, or e-mail the experimenter,<br>Sam Swift (samswift@berkeley.edu) if you think there is a problem.</p> 
+		<input type="text" id="user" class="user" value="<?php if(isset($_GET['userID'])){echo($_GET['userID']);} ?>">	
+		<button id='btn-login'>Login</button>
+	</div>
+	
 
 	<!-- game intro page -->
 	<div id="intro">
 		<h2>Welcome to</h2>
 		<h1>The Coin Collecting Game</h1>
-		<p>In this game, your goal is to finish the game with as many coins as you can.</p>
-		<p>The number of coins you can collect is determined by the size of the collector you have.</p>
-		<p>
-			This game will last <span class="total_rounds"></span> rounds.
-			After every <span class='rounds'></span> rounds you will decide how large of a collector you want to buy for the following rounds.
-		</p>
-		<br>
-		<div id="logged_no">
-			<h2>You are required to login with a valid user id to play</h2>
-			<button id='btn-login'>Login</button>
-		</div>
-		<div id="logged_yes">
-			<h2>Are you ready to begin?</h2>
-			<button id='btn-begin'>Begin</button>
-		</div>
-		<br>
+		<p>The coin collection game will last <span class="total_rounds"></span> rounds.</p>
+		<p>At the beginning of each round between 0 and 10 coins will appear.</p>
+		<p>You have a bank account with an initial balance of 50 coins.  During each round, you can add to that balance by collecting coins.  Your goal is to have as many coins as you can in your bank account at the end of the game.</p>
+		<p>To collect coins you will need a coin collector tool.</p>
+		<p>The collector tool can vary in size from one that can collect 1 coin per round up to one that can collect 10 coins per round.</p>
+		<p>Collectors that have the capacity to collect more coins are more expensive to purchase.</p>
+		<p>After <span class='rounds'></span> rounds of play your collector tool will wear out and you will be required to purchase a new collector.</p>
+		<p>Each coin that you collect will add 1 coin to your balance. Each coin that you do not collect will not change your balance.</p>
+		<p>At the end of the game the number of coins that you have collected will be converted into real money at the rate of 1 coin = 1 cent, which you will receive as a bonus payment.</p>
+		<p>Good luck!</p>
+		
+		<h2>Are you ready to begin?</h2>
+		<button id='btn-begin'>Begin</button>
 	</div>
 
 

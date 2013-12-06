@@ -19,8 +19,8 @@ $(document).ready(function()
 
 
 	// button defintions
-	$("button").button();
-	$("#btn-login").click(function(){LoginEntry()});
+	//$("button").button();
+	$("#btn-login").click(function(){UserLogin()});
 	$("#btn-begin").click(function(){GameStart()});
 	$("#btn-buy").click(function(){BuyCollector()});
 	$("#btn-next").click(function(){NextRound()});
@@ -81,6 +81,9 @@ $(document).ready(function()
 	var ScrArray = GameConfig.CurrentScreen.split(',');
 	switch(ScrArray[0])
 	{
+		case "LANDING":
+			$("#landing").show();
+			break;
 		case "INTRO":
 			$("#intro").show();
 			$.getJSON("data.php", {source:"USER",action:"SET",scr:"INTRO"});
@@ -119,7 +122,7 @@ $(document).ready(function()
 //
 function UserLogin()
 {
-	GameConfig.CurrentScreen = "INTRO";
+	GameConfig.CurrentScreen = "LANDING";
 	GameConfig.LoggedUser = '';
 
 	if($("#user").val().length > 0)
@@ -127,19 +130,13 @@ function UserLogin()
 
 	if(GameConfig.LoggedUser.length == 0)
 	{
-		$("#logged_no").show();
+		$("#landing").show();
 	}
 	else
 	{
-		// time elapsed?
-		var d1 = new Date(GameConfig.LastActivity);
-		var d2 = new Date();
-		var mins = (d2-d1)/1000/60;
-		if(mins > 20 || GameConfig.CurrentScreen == "INTRO")
-		{
-			GameConfig.CurrentScreen = "INTRO";
-			$("#logged_yes").show();
-		}
+		$("#landing").hide();
+		GameConfig.CurrentScreen == "INTRO";
+		$("#intro").show();
 	}
 }
 
@@ -479,44 +476,6 @@ function NextRound()
 	}
 }
 
-
-
-//
-// user login dialog box
-//
-function LoginEntry()
-{
-	var $LoginWindow = jQuery('#get_login');
-	
-	$LoginWindow.dialog(
-	{
-		title:'Login',
-		height:200, width:300,
-		position:'center',
-		modal:true,
-		resizable:false,
-		autoOpen:false,
-		overlay: {opacity: 0.5, background: 'black'},
-		close: function(){location.replace("index.php?userID="+GameConfig.LoggedUser)},
-		buttons: 
-		[
-			{text:'submit',	click: function() 
-				{
-					CheckUserID();
-					if(GameConfig.LoggedUser.length == 0)
-						alert("Not a valid participant ID\nIf you think this is an error,\nplease email samswift@berkeley.edu");
-					else
-						$LoginWindow.dialog("close");
-				}
-			} ,
-			{text:'cancel',	click: function() { $(this).dialog("close"); }}
-		]
-	});
-	
-	$LoginWindow.dialog("open");
-}
-
-
 //
 // user validation
 //
@@ -639,18 +598,16 @@ function SetGameStats(Tots)
 //
 function HideScreens()
 {
+	//$("#landing").hide();
 	$("#intro").hide();
 	$("#coin_tots").hide();
 	$("#round_start").hide();
 	$("#select_collect").hide();
-	$("#logged_no").hide();
-	$("#logged_yes").hide();
 	$("#survey1").hide();
 	$("#survey2").hide();
 	$("#admin").hide();
 	$("#credits").hide();
 }
-
 
 //
 // Admin menu
