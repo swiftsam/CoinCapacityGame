@@ -69,6 +69,7 @@ $(document).ready(function()
 
 	// navigate to relevant screen
 	var ScrArray = GameConfig.CurrentScreen.split(',');
+	alert(ScrArray)
 	switch(ScrArray[0])
 	{
 		case "LANDING":
@@ -93,13 +94,11 @@ $(document).ready(function()
 			break;
 		case "PBS":
 			SetGameStats(ScrArray);
-			$("#header_text").html("Post-block survey");	
 			$("#survey1").show();
 			PBS();
 			break;
 		case "PGS":
 			SetGameStats(ScrArray);
-			$("#header_text").html("Post-game survey");	
 			$("#survey2").show();
 			PGS();
 			break;
@@ -150,7 +149,6 @@ function PBS()
 		{
 			DumpActivity("PGS");
 			$("#survey1").hide();
-			$("#header_text").html("Post-game survey");	
 			$("#survey2").show();
 		}
 		else
@@ -174,7 +172,6 @@ function PGS()
 	{
 		Log("PGS");
 		$("#survey2").hide();
-		$("#header_text").html("THE END");
 		$("#credits").show();
 	}
 }
@@ -264,7 +261,6 @@ function GameStart()
 
 	// UI screen changes
 	$("#intro").hide();
-	$("#header_text").show();
 
 	CollectorDecision();
 }
@@ -287,7 +283,6 @@ function CollectorDecision()
 
 	FillTable('buy_collectors', true, null);
 	
-	$("#header_text").html("Collector Decision");
 	$("#select_collect").show();
 
 	DumpActivity("CD");
@@ -314,7 +309,6 @@ function BuyCollector()
 
 		// screen flips
 		$("#select_collect").hide();
-		$("#header_text").html("Round Start");
 		$("#round_start").show();
 		$("#coin_drop").show();
 
@@ -351,7 +345,6 @@ function CoinsAppear()
 	Log("ROUND");
 
 	// collected coins display
-	$("#header_text").html("Coins Appear");
 	$("#coin_drop").show();
 	$("#btn-bank").html("Deposit "+CoinRound.Collected+" Coins");	
 	$("#btn-bank").prop("disabled",false);
@@ -395,7 +388,6 @@ function BankCoins()
 
 
 	// change screen attribs
-	$("#header_text").html("Coins Deposited");
 	$("#btn-bank").html("Deposit Coins");	
 	$("#btn-bank").prop("disabled",true);
 
@@ -456,7 +448,6 @@ function NextRound()
 		DumpActivity("PBS");
 		$("#round_start").hide();
 		$("#coin_tots").hide();
-		$("#header_text").html("Post-block survey");	
 		$("#survey1").show();
 	}
 	else
@@ -579,7 +570,6 @@ function SetGameStats(Tots)
 							//$("input").val(num) ; break; 
 		}					
 	}
-	$("#header_text").show();
 }
 
 
@@ -599,51 +589,4 @@ function HideScreens()
 	$("#credits").hide();
 }
 
-//
-// Admin menu
-//
-function AdminMenu()
-{
-	var $AdminWindow = jQuery('#admin');	
-	$AdminWindow.dialog(
-	{
-		title:'Administrator',
-		height:200, width:530,
-		position:'center',
-		modal:true,
-		resizable:false,
-		autoOpen:false,
-		overlay: {opacity: 0.5, background: 'black'},
-		close: function()
-			{
-				HideScreens();
-				GameConfig.CurrentScreen = "INTRO";
-				$("#intro").show();
-				$("#logged_yes").show();
-			},
-	
-		buttons: 
-		[
-			{text:'Clear Logs',	click: function() 
-				{
-					$.getJSON("data.php", {source:"ADMIN", action:"LOGS"});
-					alert("Logs Cleared");
-				}
-			},
-			{text:'Reset Screens',	click: function() 
-				{
-					$.getJSON("data.php", {source:"ADMIN", action:"SCR"});
-					alert("Screens Reset");
-				}
-			},
-			{text:'Stats',	click: function() {alert('this feature not currently available')}},
-			{text:'Exit',	click: function() { $(this).dialog("close"); }}
-		]
-		
-	});
-	
-	HideScreens();
-
-	$AdminWindow.dialog("open");
-}
 

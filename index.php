@@ -29,12 +29,10 @@
 <!-- BODY -->
 <!-- **** -->
 <body>
-	<p id="header_text"></p>
-
+	<h1>The Coin Collecting Game</h1>
+	
 	<!-- landing / login page -->
 	<div id="landing">
-		<h2>Welcome to</h2>
-		<h1>The Coin Collecting Game</h1>
 		<p>To play the coin collecting game, you'll need a participation code.  You should have received a link which included the code which would have looked like this:</p>
 		<p>http://ccg.samswift.org/?userID=glIqFtKsIN</p>
 		<p>If you have a participation code, you can enter it here, or e-mail the experimenter,<br>Sam Swift (samswift@berkeley.edu) if you think there is a problem.</p> 
@@ -45,8 +43,6 @@
 
 	<!-- game intro page -->
 	<div id="intro">
-		<h2>Welcome to</h2>
-		<h1>The Coin Collecting Game</h1>
 		<p>The coin collection game will last <span class="total_rounds"></span> rounds.</p>
 		<p>At the beginning of each round between 0 and 10 coins will appear.</p>
 		<p>You have a bank account with an initial balance of 50 coins.  During each round, you can add to that balance by collecting coins.  Your goal is to have as many coins as you can in your bank account at the end of the game.</p>
@@ -138,9 +134,9 @@
 	<!-- post game survey -->
 	<div id="survey2">
 		<p>How many times was your collector too small for the coins that appeared?</p>
-		<input id="slider-pgs1" type="text" class="slider" style="width:500px;" />
+		<input id="slider-pgs1" type="text" class="slider" value="" style="width:600px;" />
 		<p>If you had to play again now and pick one collector for all rounds, what size would you pick?</p>
-		<input id="slider-pgs2" type="text" class="slider" style="width:500px;" />
+		<input id="slider-pgs2" type="text" class="slider" value="" style="width:600px;" />
 		<button id='btn-pbs'>Finish</button>
 	</div>
 
