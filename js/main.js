@@ -30,11 +30,19 @@ $(document).ready(function()
 
 
 	// slider definitions
-	$("#slider-pbs1").slider({ min:0, max:10.0, step:0.1, selection:"none" });
-	$("#slider-pbs2").slider({ min:0, max:10.0, step:0.1, selection:"none" });
-	$("#slider-pgs1").slider({ min:0, max:100, step:1, selection:"none" });
-	$("#slider-pgs2").slider({ min:0, max:10, step:1, selection:"none" });
-
+	//$(".slider").slider();
+	$("[data-slider]")
+    .each(function () {
+      var input = $(this);
+      $("<div>")
+        .addClass("output")
+        .insertAfter($(this));
+    })
+    .bind("slider:ready slider:changed", function (event, data) {
+      $(this)
+        .nextAll(".output:first")
+          .html(data.value.toFixed(1));
+    });
 
 	// user login details
 	UserLogin();
@@ -136,14 +144,14 @@ function UserLogin()
 //
 function PBS()
 {
-	if($("#slider-pbs1").slider("value")==0 || $("#slider-pbs2").slider("value")==0)
-		alert("Positive values are required. Please ensure selected values on both sliders");
-	else
+	//if($("#slider-pbs1").slider("value")==0 || $("#slider-pbs2").slider("value")==0)
+	//	alert("Positive values are required. Please ensure selected values on both sliders");
+	//else
 	{
 		Log("PBS");
 
-		$(".slider").slider("value", 0.0);
-		$(".ui-slider .ui-slider-handle").css("display","none");
+	//	$(".slider").slider("value", 0.0);
+	//	$(".ui-slider .ui-slider-handle").css("display","none");
 
 		if(CoinTots.CurrentRound == GameConfig.Rounds*GameConfig.Blocks+1)
 		{
@@ -240,6 +248,9 @@ function FillTable(TableName,HasButtons,Selected)
 		$('#'+TableName).append("<tr id='"+TableName+"_row"+i+"'>"+c1+c2+c3+c4+"</tr>");
 	}
 
+	//
+	$("input:radio[name='radio_buy']").click(function(){CollectorSelectClicked($(this).val()*1+1)});
+
 	// highligt selected row if required
 	if(Selected != null)
 	{
@@ -276,6 +287,7 @@ function CollectorDecision()
 	$("#survey1").hide();
 	$("#coin_tots").show();
    $("#btn-buy").prop("disabled",false);
+   $("#btn-buy").html("Select a collector");
 	$("#btn-bank").prop("disabled",true);
 	$("#btn-next").prop("disabled",true);
 
@@ -288,6 +300,13 @@ function CollectorDecision()
 	DumpActivity("CD");
 }
 
+//
+// Collector select clicked
+//
+function CollectorSelectClicked(value)
+{
+	$("#btn-buy").html("Buy collector "+value);	
+}
 
 //
 // buy button clicked
@@ -511,9 +530,9 @@ function Log(Action)
 			break;
 		case "PBS":
 			p1 = "slider-pbs1";
-			p2 = $("#slider-pbs1").slider("value");
+			//p2 = $("#slider-pbs1").slider("value");
 			p3 = "slider-pbs2";
-			p4 = $("#slider-pbs2").slider("value");
+			//p4 = $("#slider-pbs2").slider("value");
 			p5 = CurrentBlock.Num;
 			Action = "SURVEY";
 			break;

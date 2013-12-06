@@ -15,10 +15,10 @@
 	<script type="text/javascript" src="js/jquery-1.10.2.min.js"></script>
 	<script type="text/javascript" src="js/classes.js"></script>
 	<script type="text/javascript" src="js/main.js"></script>
-	<script type="text/javascript" src="js/bootstrap-slider.js"></script>
+	<script type="text/javascript" src="js/simple-slider.min.js"></script>
 
 	<link type="text/css" href="css/bootstrap.min.css" rel="stylesheet"/>
-	<link type="text/css" href="css/slider.css" rel="stylesheet"/>
+	<link type="text/css" href="css/simple-slider.css" rel="stylesheet"/>
 	<link type="text/css" href="css/main.css" rel="stylesheet"/>
 
 	<link rel="shortcut icon" href="../images/favicon.ico" type="image/x-icon">
@@ -124,19 +124,19 @@
 	<!-- post block survey -->
 	<div id="survey1">
 		<p>What was the average number of coins possible per round over the last <span class='rounds'></span> rounds?</p>
-		<input id="slider-pbs1" type="text" class="slider" style="width:500px;" />
+		<input id="pbs-1" type="text" class="slider" data-slider="true" data-slider-range="0,9" data-slider-step=".1">
 		<p>What was the average number of coins possible per round since the beginning of the game?</p>
-		<input id="slider-pbs2" type="text" class="slider" style="width:500px;" />
-		<button id='btn-pbs'>Continue</button>
+    	<input id="pbs-2" type="text" class="slider" data-slider="true" data-slider-range="0,9" data-slider-step=".1">
+    	<button id='btn-pbs'>Continue</button>
 	</div>
 
 
 	<!-- post game survey -->
 	<div id="survey2">
 		<p>How many times was your collector too small for the coins that appeared?</p>
-		<input id="slider-pgs1" type="text" class="slider" value="" style="width:600px;" />
+		 <input id="pgs-1" type="text" class="slider" data-slider="true" data-slider-range="0,100" data-slider-step="1">
 		<p>If you had to play again now and pick one collector for all rounds, what size would you pick?</p>
-		<input id="slider-pgs2" type="text" class="slider" value="" style="width:600px;" />
+		 <input id="pgs-2" type="text" class="slider" data-slider="true" data-slider-range="1,10" data-slider-step="1">
 		<button id='btn-pbs'>Finish</button>
 	</div>
 
@@ -149,13 +149,7 @@
 
 	<!-- credits -->
 	<div id="credits">
-		<br><br><b>Concept & Design</b>
-		<br>Dr Sam Swift
-		<br>Dr Adrian Camilleri
-
-		<br><br><b>Programming</b>
-		<br>Martin Gibbs
-		<br><br>
+		<p>Thank you for participating in the study.  Please ...</p>
 	</div>
 
 </body>
