@@ -30,10 +30,10 @@ $(document).ready(function()
 
 
 	// slider definitions
-	$("#slider-pbs1").slider({ min:0, max:9.0, step:0.1 });
-	$("#slider-pbs2").slider({ min:0, max:9.0, step:0.1 });
-	$("#slider-pgs1").slider({ min:0, max:100, step:1 });
-	$("#slider-pgs2").slider({ min:0, max:9.0, step:1 });
+	//$("#slider-pbs1").slider({ min:0, max:9.0, step:0.1 });
+	//$("#slider-pbs2").slider({ min:0, max:9.0, step:0.1 });
+	//$("#slider-pgs1").slider({ min:0, max:100, step:1 });
+	//$("#slider-pgs2").slider({ min:0, max:9.0, step:1 });
 
 	$(".slider").on("slidestart",  function(event,ui){$(ui.handle).show();});
 	$(".slider").on("slide", function(event,ui)

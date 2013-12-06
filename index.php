@@ -12,15 +12,14 @@
 	<meta name="description" content="Coin Collection Game">
 	<title>Coin Collector Game</title>
 		
-	<script type="text/javascript" src="../jQuery/js/main.js"></script>
-	<script type="text/javascript" src="../jQuery/js/ui.js"></script>
-	<script type="text/javascript" src="classes.js"></script>
-	<script type="text/javascript" src="main.js"></script>
+	<script type="text/javascript" src="js/jquery-1.10.2.min.js"></script>
+	<script type="text/javascript" src="js/classes.js"></script>
+	<script type="text/javascript" src="js/main.js"></script>
+	<script type="text/javascript" src="js/bootstrap-slider.js"></script>
 
-	<link type="text/css" href="../jQuery/css/smoothness/jquery.ui.theme.css" rel="stylesheet" />
-	<link type="text/css" href="../jQuery/css/smoothness/jquery-ui.min.css" rel="stylesheet" />
-	<link type="text/css" href="bootstrap.min.css" rel="stylesheet"/>
-	<link type="text/css" href="main.css" rel="stylesheet"/>
+	<link type="text/css" href="css/bootstrap.min.css" rel="stylesheet"/>
+	<link type="text/css" href="css/slider.css" rel="stylesheet"/>
+	<link type="text/css" href="css/main.css" rel="stylesheet"/>
 
 	<link rel="shortcut icon" href="../images/favicon.ico" type="image/x-icon">
 	<link rel="icon" href="../images/favicon.ico" type="image/x-icon">
