@@ -127,45 +127,21 @@
 
 	<!-- post block survey -->
 	<div id="survey1">
-		<br><br>
-		<table width="95%">
-			<tr><td colspan='3'>What was the average number of coins possible per round over the last <span class='rounds'></span> rounds?</td></tr>
-			<tr><td width="5px">0</td><td class="slider" id="slider-pbs1"></td><td width="5px">9</td></tr>
-		</table>
-		
-		<br><br>
-		<table width="95%">
-			<tr><td colspan="3">What was the average number of coins possible per round since the beginning of the game?</td></tr>
-			<tr><td width="5px">0</td><td class="slider" id="slider-pbs2"></td><td width="5px">9</td></tr>
-		</table>
-		
-		<br><br><br>
-		<div>
-			<button id='btn-pbs'>Save & Continue</button>
-		</div>
-		<br>
+		<p>What was the average number of coins possible per round over the last <span class='rounds'></span> rounds?</p>
+		<input id="slider-pbs1" type="text" class="slider" style="width:500px;" />
+		<p>What was the average number of coins possible per round since the beginning of the game?</p>
+		<input id="slider-pbs2" type="text" class="slider" style="width:500px;" />
+		<button id='btn-pbs'>Continue</button>
 	</div>
 
 
 	<!-- post game survey -->
 	<div id="survey2">
-		<br><br>
-		<table width="90%">
-			<tr><td colspan='3'>How many times was your collector too small for the coins that appeared</td></tr>
-			<tr><td width="5px">0</td><td class="slider" id="slider-pgs1"></td><td width="5px">100</td></tr>
-		</table>
-		
-		<br><br>
-		<table width="90%" align="center" >
-			<tr><td colspan='3'>If you had to play again now and pick one collector for all rounds, what size would you pick?</td></tr>
-			<tr><td width="5px">0</td><td class="slider" id="slider-pgs2"></td><td width="5px">9</td></tr>
-		</table>
-		
-		<br><br><br>
-		<div align='center'>
-			<button id='btn-pgs'>Save & Exit</button>
-		</div>
-		<br>
+		<p>How many times was your collector too small for the coins that appeared?</p>
+		<input id="slider-pgs1" type="text" class="slider" style="width:500px;" />
+		<p>If you had to play again now and pick one collector for all rounds, what size would you pick?</p>
+		<input id="slider-pgs2" type="text" class="slider" style="width:500px;" />
+		<button id='btn-pbs'>Finish</button>
 	</div>
 
 
