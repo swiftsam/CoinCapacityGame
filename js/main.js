@@ -20,7 +20,8 @@ $(document).ready(function()
 
 	// button defintions
 	//$("button").button();
-	$("#btn-login").click(function(){UserLogin()});
+	//$("#btn-login").click(function(){UserLogin()});
+	$("#btn-agree").click(function(){UserConsent()});
 	$("#btn-begin").click(function(){GameStart()});
 	$("#btn-buy").click(function(){BuyCollector()});
 	$("#btn-next").click(function(){NextRound()});
@@ -47,7 +48,6 @@ $(document).ready(function()
 	// user login details
 	UserLogin();
 
-
 	// grab the config data from the DB
 	$.getJSON("data.php", {source:"CONFIG",action:"GET"}, 
 	function(Data)
@@ -70,18 +70,15 @@ $(document).ready(function()
 	$(".total_rounds").each(function() {$(this).html(GameConfig.Blocks * GameConfig.Rounds);});
 
 
-	// special options for administrator
-	if(GameConfig.LoggedUser == GameConfig.AdminUser)
-		AdminMenu();
-
-
 	// navigate to relevant screen
 	var ScrArray = GameConfig.CurrentScreen.split(',');
-	alert(ScrArray)
 	switch(ScrArray[0])
 	{
 		case "LANDING":
 			$("#landing").show();
+			break;
+		case "CONSENT":
+			$("#consent").show();
 			break;
 		case "INTRO":
 			$("#intro").show();
@@ -121,8 +118,9 @@ function UserLogin()
 	GameConfig.CurrentScreen = "LANDING";
 	GameConfig.LoggedUser = '';
 
-	if($("#user").val().length > 0)
+	if($("#user").val().length > 0){
 		CheckUserID();
+	}
 
 	if(GameConfig.LoggedUser.length == 0)
 	{
@@ -131,10 +129,22 @@ function UserLogin()
 	else
 	{
 		$("#landing").hide();
-		GameConfig.CurrentScreen == "INTRO";
-		$("#intro").show();
+		GameConfig.CurrentScreen = "CONSENT";
 	}
 }
+
+//
+// User Consent
+//
+function UserConsent()
+{
+	GameConfig.CurrentScreen = "INTRO";
+	$("#consent").hide();
+	
+	$("#intro").show();
+
+}
+
 
 
 //
@@ -383,7 +393,7 @@ function CoinsAppear()
 
 	DispCoinStats();
 
-	//DumpActivity("CA");
+	DumpActivity("CA");
 }
 
 
@@ -562,7 +572,7 @@ function DumpActivity(Scr)
 	ScrData += ",tl:"+CoinTots.Lost;
 	ScrData += ",ts:"+CoinTots.Spent;
 	ScrData += ",tb:"+CoinTots.Bank;
-	ScrData += ",cs:"+$("input:checked").val();
+	ScrData += ",cs:" + $("input:radio[name='radio_buy']:checked").val();
 	$.getJSON("data.php", {source:"USER",action:"SET",scr:ScrData});
 }
 
@@ -584,8 +594,8 @@ function SetGameStats(Tots)
 			case "tl": CoinTots.Lost = num; break;
 			case "ts": CoinTots.Spent = num; break;
 			case "tb": CoinTots.Bank = num; break;
-			//case "cs": FillTable('bought_collectors', false, num); break;
-							//$("input").val(num) ; break; 
+			case "cs": FillTable('bought_collectors', false, num); break;
+			//$(input:radio[name="radio_buy"]).val(num) ; break; 
 		}					
 	}
 }
@@ -598,6 +608,7 @@ function HideScreens()
 {
 	//$("#landing").hide();
 	$("#intro").hide();
+	$("#consent").hide();
 	$("#coin_tots").hide();
 	$("#round_start").hide();
 	$("#select_collect").hide();

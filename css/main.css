@@ -1,50 +1,22 @@
 body
 {
-	//border:3px solid yellow;
 	width:600px;
 	margin-left:auto;
 	margin-right:auto;
-	//background-color:gainsboro;
 }
 
-h1
+table.collectors td
 {
-	//color:navy;
-	//font-family: arial,helvetica,sans-serif;
-	//font-size:180%;
-	//padding-top:10px;
-	//padding-bottom:10px;
-	//text-align:center;
-}
-
-h2
-{
-	//color:black;
-	//font-size:115%;
-	//margin-left:55px;
-	//margin-right:55px;
-	//padding-top:2px;
-	//text-align:justified;
-}
-
-h3
-{
-	//color:green;
-	//font-size:120%;
-	//margin-right:10px;
-}
-
-th
-{
-	//color:navy;
-	//font-family: arial,helvetica,sans-serif;
-	//font-size:120%;
-	//text-align:center;
+	padding:2px 0;	
 }
 
 tr.selected td
 {
-	background-color:goldenrod;
+	background-color: #ddd;
+	border-top: 2px solid #999;
+	border-bottom: 2px solid #999;
+	padding:5px 0;
+	margin:5px 0;
 }
 
 .dialog
@@ -100,20 +72,6 @@ tr.selected td
 {
 	width: 130px;
 	margin: 5px 0px;	
-}
-#btn-buy
-{
-	//width:160px;
-}
-#btn-next
-{
-	//width:160px;
-	//display:none; 
-	//position:absolute;
-}
-#btn-pbs
-{
-	width:140px;
 }
 
 #header_text
