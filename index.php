@@ -162,6 +162,7 @@
 	<div id="survey1">
 		<p>What was the average number of coins possible per round over the last <span class='rounds'></span> rounds?</p>
 		<input id="pbs-1" type="text" class="slider" data-slider="true" data-slider-range="0,9" data-slider-step=".1">
+		<div class="clearfix"></div>
 		<p>What was the average number of coins possible per round since the beginning of the game?</p>
     	<input id="pbs-2" type="text" class="slider" data-slider="true" data-slider-range="0,9" data-slider-step=".1">
     	<button id='btn-pbs'>Continue</button>
@@ -172,6 +173,7 @@
 	<div id="survey2">
 		<p>How many times was your collector too small for the coins that appeared?</p>
 		 <input id="pgs-1" type="text" class="slider" data-slider="true" data-slider-range="0,100" data-slider-step="1">
+		<div class="clearfix"></div>
 		<p>If you had to play again now and pick one collector for all rounds, what size would you pick?</p>
 		 <input id="pgs-2" type="text" class="slider" data-slider="true" data-slider-range="1,10" data-slider-step="1">
 		<button id='btn-pbs'>Finish</button>
@@ -186,7 +188,7 @@
 
 	<!-- credits -->
 	<div id="credits">
-		<p>Thank you for participating in the study.  Please ...</p>
+		<p>Thank you for participating in the study.  Please enter the following </p>
 	</div>
 
 </body>
