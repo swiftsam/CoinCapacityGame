@@ -129,7 +129,9 @@ function UserLogin()
 	else
 	{
 		$("#landing").hide();
-		GameConfig.CurrentScreen = "CONSENT";
+		if(GameConfig.CurrentScreen == ""){
+			GameConfig.CurrentScreen =	"CONSENT";	
+		} 
 	}
 }
 
@@ -159,8 +161,8 @@ function PBS()
 	{
 		Log("PBS");
 
-	//	$(".slider").slider("value", 0.0);
-	//	$(".ui-slider .ui-slider-handle").css("display","none");
+		$(".slider").simpleSlider("setValue", 0.0);
+		$(".slider .dragger").css("display","none");
 
 		if(CoinTots.CurrentRound == GameConfig.Rounds*GameConfig.Blocks+1)
 		{
@@ -539,17 +541,17 @@ function Log(Action)
 			break;
 		case "PBS":
 			p1 = "slider-pbs1";
-			//p2 = $("#slider-pbs1").slider("value");
+			p2 = $("#slider-pbs1+input").val();
 			p3 = "slider-pbs2";
-			//p4 = $("#slider-pbs2").slider("value");
+			p4 = $("#slider-pbs2+input").val();
 			p5 = CurrentBlock.Num;
 			Action = "SURVEY";
 			break;
 		case "PGS":
 			p1 = "slider-pgs1";
-			p2 = $("#slider-pgs1").slider("value");
+			p2 = $("#slider-pgs1+input").val();
 			p3 = "slider-pgs2";
-			p4 = $("#slider-pgs2").slider("value");
+			p4 = $("#slider-pgs2+input").val();
 			p5 = CurrentBlock.Num;
 			Action = "SURVEY";
 			break;
