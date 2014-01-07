@@ -30,20 +30,45 @@ $(document).ready(function()
 	$("#btn-bank").click(function(){BankCoins()});
 
 
-	// slider definitions
-	//$(".slider").slider();
-	$("[data-slider]")
-    .each(function () {
-      var input = $(this);
-      $("<div>")
-        .addClass("output")
-        .insertAfter($(this));
-    })
-    .bind("slider:ready slider:changed", function (event, data) {
-      $(this)
-        .nextAll(".output:first")
-          .html(data.value.toFixed(1));
-    });
+	// create slider value displays
+   $("#pbs-1").slider({
+   	min: 0,
+   	max: 10,
+   	step: .1,
+   	value: 0,
+   	slide: function(event, ui) {
+   		$("#pbs-1>a").html(ui.value);
+   	}
+   });
+   $("#pbs-2").slider({
+   	min: 0,
+   	max: 10,
+   	step: .1,
+   	value: 0,
+   	slide: function(event, ui) {
+   		$("#pbs-2>a").html(ui.value);
+   	}
+   });
+   $("#pgs-1").slider({
+   	min: 1,
+   	max: 100,
+   	step: 1,
+   	value: 0,
+   	slide: function(event, ui) {
+   		$("#pgs-1>a").html(ui.value);
+   	}
+   });
+   $("#pgs-2").slider({
+   	min: 1,
+   	max: 10,
+   	step: 1,
+   	value: 0,
+   	slide: function(event, ui) {
+   		$("#pgs-2>a").html(ui.value);
+   	}
+   });
+
+    
 
 	// user login details
 	UserLogin();
@@ -98,17 +123,16 @@ $(document).ready(function()
 			break;
 		case "PBS":
 			SetGameStats(ScrArray);
-			$("#survey1").show();
+			$("#postblocksurvey").show();
 			PBS();
 			break;
 		case "PGS":
 			SetGameStats(ScrArray);
-			$("#survey2").show();
+			$("#postgamesurvey").show();
 			PGS();
 			break;
 	}
 });
-
 
 //
 // User Login & initial screen decision
@@ -155,26 +179,22 @@ function UserConsent()
 //
 function PBS()
 {
-	//if($("#slider-pbs1").slider("value")==0 || $("#slider-pbs2").slider("value")==0)
-	//	alert("Positive values are required. Please ensure selected values on both sliders");
-	//else
+	Log("PBS");
+	$("#pbs-1").slider( "value", 0 );
+	$("#pbs-2").slider( "value", 0 );
+	$("#pbs-1>a").html("");
+	$("#pbs-2>a").html("");
+	
+	if(CoinTots.CurrentRound == GameConfig.Rounds*GameConfig.Blocks+1)
 	{
-		Log("PBS");
-
-		$(".slider").simpleSlider("setValue", 0.0);
-		$(".slider .dragger").css("display","none");
-
-		if(CoinTots.CurrentRound == GameConfig.Rounds*GameConfig.Blocks+1)
-		{
-			DumpActivity("PGS");
-			$("#survey1").hide();
-			$("#survey2").show();
-		}
-		else
-		{
-			$("#round_start").show();
-			CollectorDecision();
-		}
+		DumpActivity("PGS");
+		$("#postblocksurvey").hide();
+		$("#postgamesurvey").show();
+	}
+	else
+	{
+		$("#round_start").show();
+		CollectorDecision();
 	}
 }
 
@@ -185,14 +205,9 @@ function PBS()
 //
 function PGS()
 {
-	if($("#slider-pgs1").slider("value")==0 || $("#slider-pgs2").slider("value")==0)
-		alert("Positive values are required. Please ensure selected values on both sliders");
-	else
-	{
-		Log("PGS");
-		$("#survey2").hide();
-		$("#credits").show();
-	}
+	Log("PGS");
+	$("#postgamesurvey").hide();
+	$("#credits").show();
 }
 
 
@@ -264,7 +279,7 @@ function FillTable(TableName,HasButtons,Selected)
 	//
 	$("input:radio[name='radio_buy']").click(function(){CollectorSelectClicked($(this).val()*1+1)});
 
-	// highligt selected row if required
+	// highlight selected row if required
 	if(Selected != null)
 	{
 		var RowDef = $("#"+TableName+"_row"+Selected);
@@ -297,7 +312,7 @@ function CollectorDecision()
 {
 	$("#this_round").hide();
 	$("#round_start").hide();
-	$("#survey1").hide();
+	$("#postblocksurvey").hide();
 	$("#coin_tots").show();
    $("#btn-buy").prop("disabled",false);
    $("#btn-buy").html("Select a collector");
@@ -478,7 +493,7 @@ function NextRound()
 		DumpActivity("PBS");
 		$("#round_start").hide();
 		$("#coin_tots").hide();
-		$("#survey1").show();
+		$("#postblocksurvey").show();
 	}
 	else
 	{
@@ -541,17 +556,17 @@ function Log(Action)
 			break;
 		case "PBS":
 			p1 = "slider-pbs1";
-			p2 = $("#slider-pbs1+input").val();
+			p2 = $("#pbs-1").slider("value");
 			p3 = "slider-pbs2";
-			p4 = $("#slider-pbs2+input").val();
+			p4 = $("#pbs-2").slider("value");
 			p5 = CurrentBlock.Num;
 			Action = "SURVEY";
 			break;
 		case "PGS":
 			p1 = "slider-pgs1";
-			p2 = $("#slider-pgs1+input").val();
+			p2 = $("#pgs-1").slider("value");
 			p3 = "slider-pgs2";
-			p4 = $("#slider-pgs2+input").val();
+			p4 = $("#pgs-2").slider("value");
 			p5 = CurrentBlock.Num;
 			Action = "SURVEY";
 			break;
@@ -597,7 +612,6 @@ function SetGameStats(Tots)
 			case "ts": CoinTots.Spent = num; break;
 			case "tb": CoinTots.Bank = num; break;
 			case "cs": FillTable('bought_collectors', false, num); break;
-			//$(input:radio[name="radio_buy"]).val(num) ; break; 
 		}					
 	}
 }
@@ -614,8 +628,8 @@ function HideScreens()
 	$("#coin_tots").hide();
 	$("#round_start").hide();
 	$("#select_collect").hide();
-	$("#survey1").hide();
-	$("#survey2").hide();
+	$("#postblocksurvey").hide();
+	$("#postgamesurvey").hide();
 	$("#admin").hide();
 	$("#credits").hide();
 }

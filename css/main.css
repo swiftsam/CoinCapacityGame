@@ -126,16 +126,26 @@ tr.selected td
 	border-collapse:collapse;
 }
 
-
+.ui-slider {
+	margin: 20px 0 25px 15px;
+	width:450px;
+}
 
 .ui-slider .ui-slider-handle
-{
-    top: -8px;
-    width:30px; 
-    height:35px; 
-    position:absolute;
-    border-style:none; 
-    border:none;
-    display:none;
-    text-align: center;
+{	text-decoration: none;
+   color:#000;
+	display: block; 
+	width: 35px; 
+	height: 30px;
+	font-size: .9em;
+	text-align: center;
+	padding: 5px;
+	margin-top: -5px;
 }
+
+
+
+
+
+
+

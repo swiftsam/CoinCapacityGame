@@ -15,14 +15,19 @@
 	<script type="text/javascript" src="js/jquery-1.10.2.min.js"></script>
 	<script type="text/javascript" src="js/classes.js"></script>
 	<script type="text/javascript" src="js/main.js"></script>
-	<script type="text/javascript" src="js/simple-slider.min.js"></script>
+	<script type="text/javascript" src="js/jquery-ui-1.10.3.custom.min.js"></script>
 
 	<link type="text/css" href="css/bootstrap.min.css" rel="stylesheet"/>
-	<link type="text/css" href="css/simple-slider.css" rel="stylesheet"/>
+	<link type="text/css" href="css/jquery-ui-1.10.3.custom.css" rel="stylesheet">
 	<link type="text/css" href="css/main.css" rel="stylesheet"/>
 
 	<link rel="shortcut icon" href="../images/favicon.ico" type="image/x-icon">
 	<link rel="icon" href="../images/favicon.ico" type="image/x-icon">
+
+<!--	<script type="text/javascript" src="js/simple-slider.min.js"></script>-->
+<!--	<link type="text/css" href="css/simple-slider.css" rel="stylesheet"/>-->
+
+
 </head>
 
 <!-- **** -->
@@ -159,23 +164,23 @@
 
 
 	<!-- post block survey -->
-	<div id="survey1">
+	<div id="postblocksurvey">
 		<p>What was the average number of coins possible per round over the last <span class='rounds'></span> rounds?</p>
-		<input id="pbs-1" type="text" class="slider" data-slider="true" data-slider-range="0,9" data-slider-step=".1">
+		<div id="pbs-1"></div>
 		<div class="clearfix"></div>
 		<p>What was the average number of coins possible per round since the beginning of the game?</p>
-    	<input id="pbs-2" type="text" class="slider" data-slider="true" data-slider-range="0,9" data-slider-step=".1">
+    	<div id="pbs-2"></div>
     	<button id='btn-pbs'>Continue</button>
 	</div>
 
 
 	<!-- post game survey -->
-	<div id="survey2">
+	<div id="postgamesurvey">
 		<p>How many times was your collector too small for the coins that appeared?</p>
-		 <input id="pgs-1" type="text" class="slider" data-slider="true" data-slider-range="0,100" data-slider-step="1">
+		<div id="pgs-1"></div>
 		<div class="clearfix"></div>
 		<p>If you had to play again now and pick one collector for all rounds, what size would you pick?</p>
-		 <input id="pgs-2" type="text" class="slider" data-slider="true" data-slider-range="1,10" data-slider-step="1">
+		<div id="pgs-2"></div>
 		<button id='btn-pbs'>Finish</button>
 	</div>
 
@@ -188,7 +193,8 @@
 
 	<!-- credits -->
 	<div id="credits">
-		<p>Thank you for participating in the study.  Please enter the following </p>
+		<p>Thank you for participating in the study.</p>
+		<p>Please enter the following completion code on Mturk to </p>
 	</div>
 
 </body>
