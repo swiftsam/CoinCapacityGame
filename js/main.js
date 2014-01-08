@@ -371,6 +371,7 @@ function BuyCollector()
 		CoinTots.Spent += CurrentBlock.Cost;
 		CoinTots.Bank -= CurrentBlock.Cost;
 
+		DispCoinStats();
 		CoinsAppear();
 	}
 }
@@ -409,8 +410,6 @@ function CoinsAppear()
 	while(CoinDrops.Shown < CoinRound.Possible)
 		CoinDrops.ShowCoinLost();
 
-	DispCoinStats();
-
 	DumpActivity("CA");
 }
 
@@ -446,7 +445,8 @@ function BankCoins()
 	CoinTots.Lost += CoinRound.Lost;
 	CoinTots.Bank += CoinRound.Collected;
 
-
+	DispCoinStats();
+		
 	// button display
 	setTimeout(function(){ $("#btn-next").prop("disabled",false); }, CoinRound.Possible*Interval+200);
 }
@@ -484,7 +484,6 @@ function CoinMove(i)
 //
 function NextRound()
 {
-	//$("#btn-next").hide();
 	$("#btn-next").prop("disabled",true);
 
 	CoinTots.CurrentRound ++;
