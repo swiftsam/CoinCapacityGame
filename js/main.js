@@ -385,9 +385,9 @@ function BuyCollector()
 		CoinTots.Spent += CurrentBlock.Cost;
 		CoinTots.Bank -= CurrentBlock.Cost;
 
+		CoinsAppear();
 		DispRoundStats();
 		DispOverallStats();
-		CoinsAppear();
 	}
 }
 
@@ -513,8 +513,8 @@ function NextRound()
 	else
 	{
 		$("#coin_drop").show();
-		DispRoundStats();
 		CoinsAppear();
+		DispRoundStats();
 	}
 }
 
