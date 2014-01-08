@@ -150,6 +150,19 @@ tr.selected td
 	margin:10px auto;
 }
 
+#intro div
+{
+	float: left;
+	clear: left;
+	margin: 8px;
+} 
+
+#intro img
+{
+	float: left;
+	margin-right: 10px;
+}
+
 
 
 
