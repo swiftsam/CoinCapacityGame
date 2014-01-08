@@ -89,9 +89,12 @@
 		<div><img src="images/coin.png" width="30" height="30">At the beginning of each round between 0 and 10 coins will appear.</div>
 		<div><img src="images/piggy.png" width="40" height="35">You have a bank account with an initial balance of 50 coins.  During each round, you can add to that balance by collecting coins.  Your goal is to have as many coins as you can in your bank account at the end of the game.</div>
 		<div><img src="images/slot.png" width="45" height="20">To collect coins you will need a coin collector tool.</div>
-		<div><img src="images/selector.png" width="180" height="96">The collector tool can vary in size from one that can collect 1 coin per round up to one that can collect 10 coins per round.</div>
-		<div>Collectors that have the capacity to collect more coins are more expensive to purchase. You will buy collectors using coins from your bank balance.</div>
-		<div>After every <span class='rounds'></span> rounds of play your collector tool will wear out and you will be required to purchase a new collector.</div>
+		<div>
+			<img src="images/selector.png" width="248" height="128">
+			<p>The collector tool can vary in size from one that can collect 1 coin per round up to one that can collect 10 coins per round.</p>
+			<p>Collectors that have the capacity to collect more coins are more expensive to purchase. You will buy collectors using coins from your bank balance.</p>
+			<p>After every <span class='rounds'></span> rounds of play your collector tool will wear out and you will be required to purchase a new collector.</p>
+		</div>
 		<div>Each coin that you collect will add 1 coin to your balance. Each coin that you do not collect will not change your balance.</div>
 <!--		<div>At the end of the game the number of coins that you have collected will be converted into real money at the rate of 1 coin = 1 cent, which you will receive as a bonus payment.</div>-->
 		<br class="clearfix">
