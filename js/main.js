@@ -207,6 +207,7 @@ function PGS()
 {
 	Log("PGS");
 	$("#postgamesurvey").hide();
+	$("#completioncode").html(GameConfig.LoggedUser+CoinTots.Bank+Math.floor((Math.random()*9)));
 	$("#credits").show();
 }
 

@@ -181,7 +181,7 @@
 		<div class="clearfix"></div>
 		<p>If you had to play again now and pick one collector for all rounds, what size would you pick?</p>
 		<div id="pgs-2"></div>
-		<button id='btn-pbs'>Finish</button>
+		<button id='btn-pgs'>Finish</button>
 	</div>
 
 
@@ -194,9 +194,10 @@
 	<!-- credits -->
 	<div id="credits">
 		<p>Thank you for participating in the study.</p>
-		<p>Please enter the following completion code on Mturk to </p>
+		<p>Please enter the following code on Mturk to confirm your completion of this HIT<br />
+		<div id="completioncode"></div>
+		<p>Feel free to send any comments or thoughts about the study to the experimenter,<br>Sam Swift (samswift@berkeley.edu)</p>	
+		</p>
 	</div>
-
 </body>
-
 </html>
