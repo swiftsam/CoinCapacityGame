@@ -213,23 +213,37 @@ function PGS()
 
 
 //
-// display coin statisctics on screen
+// display current round statistics on screen
 //
-function DispCoinStats()
+function DispRoundStats()
 {
 	$("#this_round .stat").css('opacity',0);
+	
 	$("#curr_round").html(CoinTots.CurrentRound);
+	$("#coins_poss_this").html(CoinRound.Possible);
+	$("#coins_coll_this").html(CoinRound.Collected);
+	$("#coins_lost_this").html(CoinRound.Lost);
+	
+	$("#this_round .stat").animate({opacity:1});
+}
+
+//
+// display overall statistics on screen
+//
+function DispOverallStats()
+{
+	$("#all_rounds .stat").css('opacity', 0);
+	
 	$("#coins_poss_tot").html(CoinTots.Possible);
 	$("#coins_coll_tot").html(CoinTots.Collected);
 	$("#coins_lost_tot").html(CoinTots.Lost);
 	$("#coins_spent_tot").html(CoinTots.Spent);
 	$("#coins_bank_tot").html(CoinTots.Bank);
-	$("#this_round .stat").animate({opacity:1});
 
-	$("#coins_poss_this").html(CoinRound.Possible);
-	$("#coins_coll_this").html(CoinRound.Collected);
-	$("#coins_lost_this").html(CoinRound.Lost);
+	
+	$("#all_rounds .stat").animate({opacity:1});
 }
+
 
 
 //
@@ -320,7 +334,7 @@ function CollectorDecision()
 	$("#btn-bank").prop("disabled",true);
 	$("#btn-next").prop("disabled",true);
 
-	DispCoinStats();
+	DispOverallStats();
 
 	FillTable('buy_collectors', true, null);
 	
@@ -371,7 +385,8 @@ function BuyCollector()
 		CoinTots.Spent += CurrentBlock.Cost;
 		CoinTots.Bank -= CurrentBlock.Cost;
 
-		DispCoinStats();
+		DispRoundStats();
+		DispOverallStats();
 		CoinsAppear();
 	}
 }
@@ -445,7 +460,7 @@ function BankCoins()
 	CoinTots.Lost += CoinRound.Lost;
 	CoinTots.Bank += CoinRound.Collected;
 
-	DispCoinStats();
+	DispOverallStats();
 		
 	// button display
 	setTimeout(function(){ $("#btn-next").prop("disabled",false); }, CoinRound.Possible*Interval+200);
@@ -498,6 +513,7 @@ function NextRound()
 	else
 	{
 		$("#coin_drop").show();
+		DispRoundStats();
 		CoinsAppear();
 	}
 }
