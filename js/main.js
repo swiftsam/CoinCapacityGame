@@ -282,7 +282,7 @@ function FillTable(TableName,HasButtons,Selected)
 		var Price = GameConfig.Prices[i];
 		var Width = CollectorPixels(Size);
 
-		var c1 = "<td align='right'><img src='../images/slot.png' height='25' width='"+ Width +"'></td>";
+		var c1 = "<td align='right'><img src='images/slot.png' height='25' width='"+ Width +"'></td>";
 		var c2 = "<td class='tablecol' style='padding-right: 40px;'>"+Size+"</b></td>";
 		var c3 = "<td class='tablecol' style='padding-right: 20px;'>"+Price+" coins </td>";
 		var c4 = '';

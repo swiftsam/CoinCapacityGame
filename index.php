@@ -21,8 +21,8 @@
 	<link type="text/css" href="css/jquery-ui-1.10.3.custom.css" rel="stylesheet">
 	<link type="text/css" href="css/main.css" rel="stylesheet"/>
 
-	<link rel="shortcut icon" href="../images/favicon.ico" type="image/x-icon">
-	<link rel="icon" href="../images/favicon.ico" type="image/x-icon">
+	<link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon">
+	<link rel="icon" href="images/favicon.ico" type="image/x-icon">
 
 <!--	<script type="text/javascript" src="js/simple-slider.min.js"></script>-->
 <!--	<link type="text/css" href="css/simple-slider.css" rel="stylesheet"/>-->

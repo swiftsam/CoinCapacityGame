@@ -53,7 +53,7 @@ function GetCoins()
 	this.ShowCoinCollected = ShowCoinCollected;
 	this.ShowCoinLost = ShowCoinLost;
 	this.GhostCoin = GhostCoin;
-	this.CoinImage = "img src='../images/coin.png' height='40' ";
+	this.CoinImage = "img src='images/coin.png' height='40' ";
 
 	function SetPossible(Round)
 	{
